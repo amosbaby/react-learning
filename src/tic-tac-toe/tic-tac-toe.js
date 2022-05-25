@@ -16,27 +16,22 @@ function Square(props) {
 function Board(props) {
 
   function renderSquare (i){
-    return <Square value={props.squares[i]} onClick={()=>props.onClick(i)}/>;
+    return <Square key={i} value={props.squares[i]} onClick={()=>props.onClick(i)}/>;
   } 
+
+  
+  const rows = Array(3).fill(0).map((_,rowIndex)=> {
+    const cols =  Array(3).fill(0).map((_,colIndex) => renderSquare(rowIndex * 3 + colIndex) )
+    return (
+      <div className="board-row" key={rowIndex}>
+        {cols}
+      </div>
+    )
+  } )
 
   return (
     <div>
-      {/* <div className="status">{status}</div> */}
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
+      { rows }
     </div>
   );
 
@@ -70,9 +65,12 @@ export class Game extends React.Component {
       xIsNext: !this.state.xIsNext,
       move: history.length
     })
-    console.log(this.state.history)
   }
 
+  /**
+   * 跳转到指定步骤
+   * @param {*} move 
+   */
   jumpTo(move){
     this.setState({move,xIsNext: move % 2 === 0})
   }
@@ -81,11 +79,10 @@ export class Game extends React.Component {
     
     const {history,move} = this.state
     const current = history[move]
-    console.log('current:',history,move, current)
     const winner =  calculateWinner(current.squares)
     const status = winner ? 'Winner is: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
-    const moves = history.map((step,move)=>{
+    const moves = history.map((_,move)=>{
       const desc = move ? 'Go to move# ' + move : 'Go to game start'
       return (
         <li key={desc}>
