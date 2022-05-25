@@ -19,7 +19,7 @@ class Board extends React.Component {
     super(props)
     this.state = {
       squares: Array(9).fill(null),
-      step: 0 // 记录当前步数，判断下一步是X还是O
+      xIsNext: true // ，判断下一步是X还是O
     }
   }
 
@@ -30,20 +30,22 @@ class Board extends React.Component {
   handleClick(index){
     // 保证数据的不可变性
     const squares = this.state.squares.slice()
-    if(squares[index] === null){
-      const step = this.state.step + 1
-      squares[index] = step % 2 ? 'X' : 'O'
-      this.setState({
-        step,squares
-      })
+    if(calculateWinner(this.state.squares) || squares[index]){
+      return
     }
+    squares[index] = this.state.xIsNext ? 'X' : 'O'
+    this.setState({
+      squares,
+      xIsNext: !this.state.xIsNext
+    })
   }
 
-  
+   
 
   render() {
-    const status = 'Next player: X';
-
+    const winner =  calculateWinner(this.state.squares)
+    const status = winner ? 'winner is: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    
     return (
       <div>
         <div className="status">{status}</div>
@@ -81,4 +83,25 @@ export class Game extends React.Component {
       </div>
     );
   }
+}
+
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
 }
