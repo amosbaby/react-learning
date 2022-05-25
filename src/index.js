@@ -1,7 +1,8 @@
 
 import ReactDOM from 'react-dom/client';
-import { Game } from './tic-tac-toe/tic-tac-toe';
-import { Clock } from './clock/clock';
+// import { Game } from './tic-tac-toe/tic-tac-toe';
+// import { Clock } from './clock/clock';
+// import { ConditionRender } from './condition-render/condition-render';
 
 
 // ========================================
@@ -9,8 +10,10 @@ import { Clock } from './clock/clock';
  const root = ReactDOM.createRoot(document.getElementById("root"));
  const element = (
    <div>
-     <Clock />
-     <Game/>
+     {/* <Clock /> */}
+     {/* <Game/> */}
+     {/* <ConditionRender isShowName="amos" type="age"></ConditionRender>
+     <ConditionRender type="name"></ConditionRender> */}
    </div>
  )
  root.render(element);

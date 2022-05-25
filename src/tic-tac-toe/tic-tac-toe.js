@@ -58,12 +58,14 @@ export class Game extends React.Component {
       return
     }
     squares[index] = this.state.xIsNext ? 'X' : 'O'
-    this.setState({
-      history: history.concat({
-        squares
-      }),
-      xIsNext: !this.state.xIsNext,
-      move: history.length
+    this.setState((state)=>{
+      return {
+        history: history.concat({
+          squares
+        }),
+        xIsNext: !state.xIsNext,
+        move: history.length
+      }
     })
   }
 
