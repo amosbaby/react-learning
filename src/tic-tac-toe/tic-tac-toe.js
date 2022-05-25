@@ -13,68 +13,75 @@ function Square(props) {
     );
 }
 
-class Board extends React.Component {
+function Board(props) {
+
+  function renderSquare (i){
+    return <Square value={props.squares[i]} onClick={()=>props.onClick(i)}/>;
+  } 
+
+  const winner =  calculateWinner(props.squares)
+  const status = winner ? 'Winner is: ' + winner : 'Next player: ' + (props.xIsNext ? 'X' : 'O');
+  
+  return (
+    <div>
+      <div className="status">{status}</div>
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
+      </div>
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
+    </div>
+  );
+
+}
+
+export class Game extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-      squares: Array(9).fill(null),
+      history:[{
+        squares: Array(9).fill(null),
+      }],
       xIsNext: true // ，判断下一步是X还是O
     }
   }
 
-  renderSquare(i) {
-    return <Square value={this.state.squares[i]} onClick={()=>this.handleClick(i)}/>;
-  }
-
   handleClick(index){
     // 保证数据的不可变性
-    const squares = this.state.squares.slice()
-    if(calculateWinner(this.state.squares) || squares[index]){
+    const history = this.state.history.slice()
+    const current = history[history.length - 1]
+    if(calculateWinner(current.squares) || current.squares[index]){
       return
     }
-    squares[index] = this.state.xIsNext ? 'X' : 'O'
+    current.squares[index] = this.state.xIsNext ? 'X' : 'O'
     this.setState({
-      squares,
+      history: history.concat({
+        squares: current.squares
+      }),
       xIsNext: !this.state.xIsNext
     })
+    console.log(this.state.history)
   }
-
-   
-
   render() {
-    const winner =  calculateWinner(this.state.squares)
-    const status = winner ? 'winner is: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
-}
 
-export class Game extends React.Component {
-  render() {
+    const history = this.state.history
+    const current = history[history.length - 1]
+
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board xIsNext={this.state.xIsNext} squares={current.squares} onClick={(i) => this.handleClick(i)}/>
         </div>
         <div className="game-info">
           <div>{/* status */}</div>
