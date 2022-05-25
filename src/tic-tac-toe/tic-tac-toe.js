@@ -19,12 +19,9 @@ function Board(props) {
     return <Square value={props.squares[i]} onClick={()=>props.onClick(i)}/>;
   } 
 
-  const winner =  calculateWinner(props.squares)
-  const status = winner ? 'Winner is: ' + winner : 'Next player: ' + (props.xIsNext ? 'X' : 'O');
-  
   return (
     <div>
-      <div className="status">{status}</div>
+      {/* <div className="status">{status}</div> */}
       <div className="board-row">
         {renderSquare(0)}
         {renderSquare(1)}
@@ -53,39 +50,58 @@ export class Game extends React.Component {
       history:[{
         squares: Array(9).fill(null),
       }],
+      move:0,
       xIsNext: true // ，判断下一步是X还是O
     }
   }
 
   handleClick(index){
-    // 保证数据的不可变性
-    const history = this.state.history.slice()
-    const current = history[history.length - 1]
-    if(calculateWinner(current.squares) || current.squares[index]){
+    // 保证数据的不可变性,如果返回到某一步再走一步，则之前的记录失效了，因此只截取最新的
+    const history = this.state.history.slice(0,this.state.move + 1)
+    const squares = history[history.length - 1].squares.slice()
+    if(calculateWinner(squares) || squares[index] || this.state.move < history.length - 1){
       return
     }
-    current.squares[index] = this.state.xIsNext ? 'X' : 'O'
+    squares[index] = this.state.xIsNext ? 'X' : 'O'
     this.setState({
       history: history.concat({
-        squares: current.squares
+        squares
       }),
-      xIsNext: !this.state.xIsNext
+      xIsNext: !this.state.xIsNext,
+      move: history.length
     })
     console.log(this.state.history)
   }
+
+  jumpTo(move){
+    this.setState({move,xIsNext: move % 2 === 0})
+  }
+
   render() {
+    
+    const {history,move} = this.state
+    const current = history[move]
+    console.log('current:',history,move, current)
+    const winner =  calculateWinner(current.squares)
+    const status = winner ? 'Winner is: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
-    const history = this.state.history
-    const current = history[history.length - 1]
-
+    const moves = history.map((step,move)=>{
+      const desc = move ? 'Go to move# ' + move : 'Go to game start'
+      return (
+        <li key={desc}>
+          <button onClick={()=>this.jumpTo(move)}> { desc } </button>
+        </li>
+      )
+    })
+    
     return (
       <div className="game">
         <div className="game-board">
           <Board xIsNext={this.state.xIsNext} squares={current.squares} onClick={(i) => this.handleClick(i)}/>
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
+          <div>{status}</div>
+          <ol>{ moves }</ol>
         </div>
       </div>
     );
