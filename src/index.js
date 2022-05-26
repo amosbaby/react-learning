@@ -1,6 +1,6 @@
 
 import ReactDOM from 'react-dom/client';
-import { Form } from './form/form';
+import { Calculator } from './temperature/temperature';
 // import { Game } from './tic-tac-toe/tic-tac-toe';
 // import { Clock } from './clock/clock';
 // import { ConditionRender } from './condition-render/condition-render';
@@ -11,7 +11,7 @@ import { Form } from './form/form';
  const root = ReactDOM.createRoot(document.getElementById("root"));
  const element = (
    <div>
-     {<Form />}
+     {<Calculator />}
      {/* <Clock /> */}
      {/* <Game/> */}
      {/* <ConditionRender isShowName="amos" type="age"></ConditionRender>
