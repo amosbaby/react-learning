@@ -1,6 +1,7 @@
 
 import ReactDOM from 'react-dom/client';
-import { MessageList } from './context/context';
+// import { MessageList } from './context/context';
+import { ErrorBoundaryTest } from './error-boundary/error-boundary';
 // import { Calculator } from './temperature/temperature';
 // import { Game } from './tic-tac-toe/tic-tac-toe';
 // import { Clock } from './clock/clock';
@@ -12,7 +13,8 @@ import { MessageList } from './context/context';
  const root = ReactDOM.createRoot(document.getElementById("root"));
  const element = (
    <div>
-     {<MessageList /> }
+     { <ErrorBoundaryTest />}
+     {/* {<MessageList /> } */}
      {/* {<Calculator />} */}
      {/* <Clock /> */}
      {/* <Game/> */}
