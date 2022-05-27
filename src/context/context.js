@@ -14,18 +14,31 @@ const Theme = {
 // 默认值为light，只有当组件在组件树中没有找到对应的provider，才会启用默认值
 const ThemeContext = React.createContext('light')
 
-class Button extends React.Component{
-  // 指定 contextType 读取当前的 theme context。
-  // React 会往上找到最近的 theme Provider，然后使用它的值。
-  // 在这个例子中，当前的 theme 值为 “dark”。
-  // 实验特性
-  static contextType = ThemeContext
-  render(){
-    console.log('value:',this.context.value)
+// class Button extends React.Component{
+//   // 指定 contextType 读取当前的 theme context。
+//   // React 会往上找到最近的 theme Provider，然后使用它的值。
+//   // 在这个例子中，当前的 theme 值为 “dark”。
+//   // 实验特性
+//   static contextType = ThemeContext
+//   render(){
+//     return (
+//       <button theme={this.context.value} style={getStyleByTheme(this.context)}> Click Me  </button>
+//     )
+//   }
+// }
+
+function Button(){
     return (
-      <button theme={this.context.value} style={getStyleByTheme(this.context)}> Click Me  </button>
+      // 该组件元素提供context值，其内部必须通过一个函数返回组件元素
+      <ThemeContext.Consumer>
+        {
+          context=>(
+            <button theme={context.value} style={getStyleByTheme(context)}> Click Me  </button>
+          )
+        }
+       
+      </ThemeContext.Consumer>
     )
-  }
 }
 
 function Message(props){
