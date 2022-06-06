@@ -1,7 +1,8 @@
 
 import ReactDOM from 'react-dom/client';
+import { TestFancyButton } from './ref/fancy-button';
 // import { MessageList } from './context/context';
-import { ErrorBoundaryTest } from './error-boundary/error-boundary';
+// import { ErrorBoundaryTest } from './error-boundary/error-boundary';
 // import { Calculator } from './temperature/temperature';
 // import { Game } from './tic-tac-toe/tic-tac-toe';
 // import { Clock } from './clock/clock';
@@ -13,7 +14,8 @@ import { ErrorBoundaryTest } from './error-boundary/error-boundary';
  const root = ReactDOM.createRoot(document.getElementById("root"));
  const element = (
    <div>
-     { <ErrorBoundaryTest />}
+     { <TestFancyButton /> }
+     {/* { <ErrorBoundaryTest />} */}
      {/* {<MessageList /> } */}
      {/* {<Calculator />} */}
      {/* <Clock /> */}
