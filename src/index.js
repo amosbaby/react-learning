@@ -1,6 +1,7 @@
 
 import ReactDOM from 'react-dom/client';
-import { TestFancyButton } from './ref/fancy-button';
+import { TestTable } from './fragment/fragment';
+// import { TestFancyButton } from './ref/fancy-button';
 // import { MessageList } from './context/context';
 // import { ErrorBoundaryTest } from './error-boundary/error-boundary';
 // import { Calculator } from './temperature/temperature';
@@ -14,7 +15,8 @@ import { TestFancyButton } from './ref/fancy-button';
  const root = ReactDOM.createRoot(document.getElementById("root"));
  const element = (
    <div>
-     { <TestFancyButton /> }
+     {<TestTable></TestTable>}
+     {/* { <TestFancyButton /> } */}
      {/* { <ErrorBoundaryTest />} */}
      {/* {<MessageList /> } */}
      {/* {<Calculator />} */}
