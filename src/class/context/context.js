@@ -1,4 +1,4 @@
-import React from "react"
+import React ,{useContext }from "react"
 
 const Theme = {
   dark:{
@@ -28,16 +28,19 @@ const ThemeContext = React.createContext('light')
 // }
 
 function Button(){
+  const theme = useContext(ThemeContext)
     return (
       // 该组件元素提供context值，其内部必须通过一个函数返回组件元素
-      <ThemeContext.Consumer>
-        {
-          context=>(
-            <button theme={context.value} style={getStyleByTheme(context)}> Click Me  </button>
-          )
-        }
+      // <ThemeContext.Consumer>
+      //   {
+      //     context=>(
+      //       <button theme={context.value} style={getStyleByTheme(context)}> Click Me  </button>
+      //     )
+      //   }
        
-      </ThemeContext.Consumer>
+      // </ThemeContext.Consumer>
+
+      <button theme={theme} style={getStyleByTheme(theme)}> Click Me  </button>
     )
 }
 
