@@ -1,5 +1,12 @@
+/**
+ * 参考文档：https://www.robinwieruch.de/react-hooks-fetch-data/
+ * api文档：https://hn.algolia.com/api
+ */
+
 import axios from "axios"
 import { useEffect, useReducer, useState } from "react"
+
+const tags = ['story','comment','poll','pollopt','show_hn','ask_hn','front_page','author_','story_']
 
 const FETCH_START = 'FETCH_START'
 const FETCH_SUCCESS = 'FETCH_SUCCESS'
@@ -67,7 +74,9 @@ function HackNews(){
       
           state.list.map(item =>{
             return (
-              <li key={item.objectID}> {item.title || item.story_title} </li> 
+              <li key={item.objectID}>
+                <a href={item.url} target="__blank">  {item.title || item.story_title} </a>  
+              </li> 
             )
           })
         }

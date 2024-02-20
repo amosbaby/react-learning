@@ -14,9 +14,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "tsc --init",
+    "build": "react-scripts build --prod",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "upload-aly":"scp -rp -O ./build/* root@39.108.52.97:/usr/share/nginx/html",
     "flow": "flow"
   },
   "eslintConfig": {

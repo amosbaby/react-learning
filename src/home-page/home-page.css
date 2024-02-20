@@ -1,0 +1,59 @@
+
+
+.container{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 使用网络图片作为背景 */
+  /* 应用玻璃模糊效果 */
+  backdrop-filter: blur(10px);
+}
+
+.weather{
+  position:absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  color: white;
+  text-align: center;
+  z-index: 2;
+  font-size: 12px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.img{
+  width: 100%;
+  max-height: 75vh;
+}
+.img-title{
+  color: lightgray;
+  font-size: 12px;
+  text-align: center;
+  margin: 12px;
+}
+.sentence{
+  color: white;
+  font-size: 1em;
+  text-align: center;
+  margin: 12px;
+}
